@@ -1,0 +1,85 @@
+App.java----------------------------
+
+package com.example;
+
+import java.util.Scanner;
+
+public abstract class App
+{
+	
+	public static Scanner sc = new Scanner(System.in);
+	public static String Defineid = "Ritesh123@gmail.com";
+	public static String Definepass = "12345";
+	public static String pass;
+	public static String id;
+	
+	public static boolean authenticate() {
+		if(id.equals(Defineid) && pass.equals(Definepass))
+			return true;
+		else return false;
+	}
+	
+	static void inputID() {
+		System.out.println("Enter ID: ");
+		id=sc.next();	
+	}
+	
+	static void inputPassword() {
+		System.out.println("Enter Password: ");
+		pass=sc.next();
+	}
+	
+}
+
+
+
+Authenticate.java-------------------------
+
+package com.example;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+import org.junit.jupiter.api.*;
+
+class Authenticate {
+
+	@Test
+	@DisplayName("Testcase for Authentication of User")
+	void userAuthenticate() {
+		assertNotNull(App.id);
+		assertEquals(App.Defineid,App.id);
+	}
+	
+	@Test
+	@DisplayName("Testcase for Authentication of Password")
+	void passwordAuthenticate() {
+		assertNotNull(App.pass);
+		assertEquals(App.Definepass, App.pass);
+	}
+	
+	@BeforeAll
+	@DisplayName("First Testcase.")
+	static void authenticationTestCase() {
+		App.inputID();
+	    App.inputPassword();
+	    
+	    assertNotNull(App.id);
+	    assertNotNull(App.pass);		
+	}
+	
+	@AfterAll
+	@DisplayName("Last Testcase.")
+	static void last() {
+		
+		if (App.authenticate())
+			System.out.println("Authentication Successfull...");
+		else System.out.println("Authentication Failed...");
+		
+		App.id = null;
+		App.pass = null;
+		
+		assertNull(App.id);
+		assertNull(App.pass);
+	}
+
+}
